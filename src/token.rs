@@ -49,6 +49,9 @@ pub enum Token {
     Comma, // ,
     Semi,  //;
 
+    Increment, // ++
+    Decrement, // --
+
     Whitespace,
     Eof,
 }

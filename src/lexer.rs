@@ -37,8 +37,22 @@ impl Lexer {
         let cur = self.advance().ok_or_else(|| LexerErrors::NOChars)?;
         match cur {
             '\n' | '\t' | ' ' => Ok(Token::Whitespace),
-            '+' => Ok(Token::Plus),
-            '-' => Ok(Token::Minus),
+            '+' => {
+                if self.is_match('+') {
+                    self.advance();
+                    Ok(Token::Increment)
+                } else {
+                    Ok(Token::Plus)
+                }
+            }
+            '-' => {
+                if self.is_match('-') {
+                    self.advance();
+                    Ok(Token::Decrement)
+                } else {
+                    Ok(Token::Minus)
+                }
+            }
             '*' => Ok(Token::Mul),
             '/' => Ok(Token::Div),
             '%' => Ok(Token::Mod),
