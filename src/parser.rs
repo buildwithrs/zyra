@@ -85,6 +85,7 @@ impl Parser {
             self.consume(Token::Comma)?;
         }
         self.consume(Token::RightParen)?;
+        println!("consumed fn name and params: {:?}, {:?}", name, params);
         let block = self.parse_block()?;
 
         Ok(Stmt::Func(Fn {
@@ -145,13 +146,13 @@ impl Parser {
     fn parse_return(&mut self) -> ZyraResult<Stmt> {
         self.advance();
 
-        let mut val = None;
         if self.is_match(Token::Semi) {
-            Ok(Stmt::Return(Return { value: val }))
+            self.advance();
+            Ok(Stmt::Return(Return { value: None }))
         } else {
-            Ok(Stmt::Return(Return {
-                value: Some(self.parse_expression()?),
-            }))
+            let val = self.parse_expression()?;
+            self.consume(Token::Semi)?;
+            Ok(Stmt::Return(Return { value: Some(val) }))
         }
     }
     fn parse_block(&mut self) -> ZyraResult<Block> {
