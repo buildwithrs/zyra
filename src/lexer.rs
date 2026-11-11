@@ -180,11 +180,13 @@ impl Lexer {
         let text = String::from_iter(&self.chars[self.start..self.current]);
         match text.as_str() {
             "fn" => Ok(Token::KW(KW::Function)),
-            "if" => Ok(Token::KW(KW::Function)),
+            "if" => Ok(Token::KW(KW::If)),
             "else" => Ok(Token::KW(KW::Else)),
             "for" => Ok(Token::KW(KW::For)),
             "return" => Ok(Token::KW(KW::Return)),
             "print" => Ok(Token::KW(KW::Print)),
+            "break" => Ok(Token::KW(KW::Break)),
+            "continue" => Ok(Token::KW(KW::Continue)),
             "true" => Ok(Token::Boolean(true)),
             "false" => Ok(Token::Boolean(false)),
             "null" => Ok(Token::Null),

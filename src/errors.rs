@@ -33,6 +33,15 @@ pub enum LexerErrors {
 pub enum ParserErrors {
     #[error("unknow char")]
     UnknowChar(char),
+
+    #[error("End of Tokens")]
+    Eof,
+
+    #[error("token not match")]
+    TokenNotMatch,
+
+    #[error("expect token: {0}")]
+    ExpectToken(String),
 }
 
 #[derive(Debug, Error)]
